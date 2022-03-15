@@ -69,7 +69,7 @@ function setup() {
   setupOptions(
     ...['lmu-options-text', 'lmu-options-weight', 'lmu-options-font-size', 'lmu-text-main']
       .map(t => document.getElementById(t)),
-    '/worksans.ttf',
+    'worksans.ttf',
     yMin => `${mapRange(yMin, -10, -215, -0.0625, 0.125)}em`); // trial and error
 }
 
