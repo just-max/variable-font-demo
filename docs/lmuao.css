@@ -1,0 +1,196 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/worksans.ttf') format('truetype');
+  font-named-instance: 'Regular';
+}
+
+:root {
+  --lmu-green: #00883a;
+  --lmu-green-faded: #71ba90;
+  --light-grey: #f5f5f5;
+  --dark-grey: #232323;
+
+  --font-family-variable: 'Work Sans';
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-variable), sans-serif;
+  color: var(--dark-grey);
+}
+
+.options-container {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.options-container > * {
+  height: max-content;
+  flex: 1 1 auto;
+  min-width: 100%;
+}
+
+.options-text {
+  font-family: var(--font-family-variable), sans-serif;
+  color: var(--dark-grey);
+  font-weight: bold;
+  font-size: 1em;
+  max-width: 100%;
+  height: 2em;
+  border: none;
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: var(--lmu-green-faded);
+  transition: text-decoration-color 0.25s;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.06em;
+}
+
+/* text underline is aligned slightly differently in Firefox */
+@supports (-moz-appearance:none) {
+  .options-text {
+    text-underline-offset: 0.1em;
+  }
+}
+
+.options-text:focus-within {
+  text-decoration-color: var(--lmu-green);
+}
+
+.options-container .noUi-connect {
+  background-color: var(--lmu-green);
+}
+
+.options-container .noUi-connects {
+  overflow: visible;
+}
+
+.options-container .noUi-connect {
+  position: absolute;
+  left: -2px;
+}
+
+.options-container .noUi-target {
+  height: 4px;
+  padding: 0 2px;
+  background-color: var(--lmu-green-faded);
+  transition: background-color 0.25s;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.options-container .noUi-handle::before,
+.options-container .noUi-handle::after {
+    display: none;
+}
+
+.options-container .noUi-handle {
+  border-radius: 0;
+  background-color: var(--lmu-green);
+  height: 20px !important;
+  width: 4px !important;
+  top: -8px !important;
+  right: -2px !important;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+
+.options-container .noUi-target:hover {
+  background: var(--lmu-green);
+}
+
+.options-container .noUi-handle .noUi-touch-area {
+  position: absolute;
+  top: -14px;
+  bottom: -14px;
+  left: -14px;
+  right: -14px;
+  width: auto;
+  height: auto;
+}
+
+/* .options-container */ /* .noUi-handle:hover */ /* .noUi-touch-area {
+  border: 1px dashed #7f7f7f;
+} */
+
+.slider-range .noUi-handle[data-handle="0"] .noUi-touch-area {
+  cursor: w-resize;
+  left: -18px;
+  right: -10px;
+}
+
+.slider-range .noUi-handle[data-handle="1"] .noUi-touch-area {
+  cursor: e-resize;
+  left: -10px;
+  right: -18px;
+}
+
+.noUi-touch-area {
+  cursor: col-resize;
+}
+
+.with-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.62em;
+}
+
+.with-icon-content {
+  flex-grow: 1;
+}
+
+footer a {
+  color: white;
+}
+footer a:hover {
+  color: var(--lmu-green-faded);
+}
+
+footer p {
+  margin: 0;
+}
+
+.header-grey {
+  background-color: var(--light-grey);
+}
+
+.padded {
+  padding: 16px;
+}
+
+.shadow {
+  box-shadow: 0 1px 1px 0 rgba(35, 35, 35, 0.08), 0 1px 3px 1px rgba(35, 35, 35, 0.16);
+}
+
+.lmu-box {
+  aspect-ratio: 1;
+  background-color: var(--lmu-green);
+  min-width: max-content;
+  min-height: min-content;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.lmu-text {
+  color: white;
+  font-family: var(--font-family-variable), sans-serif;
+  white-space: pre;
+  margin: 0.125em;
+  margin-bottom: -0.0625em;
+}
