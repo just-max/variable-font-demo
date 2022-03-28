@@ -10,7 +10,7 @@ Demo is available at https://just-max.github.io/variable-font-demo/.
 ## How Does It Work?
 
 We can use a [variable font](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide) such as Work Sans and adjust the weight (`wght`) variation axis to continuously vary the line weight of the glyphs.
-https://wakamaifondue.com/
+A useful tool for checking what a font can do is https://wakamaifondue.com/.
 
 
 ## Licence
@@ -24,3 +24,4 @@ The remaining files are licensed under the Mozilla Public License, Version 2.0. 
 - All two icons on the page are from [Material Icons](https://fonts.google.com/icons)
 - For adapting the bottom margin to the descender height [opentype.js](https://opentype.js.org/) is used to parse the font file.
 - Sliders are made with [noUiSlider](https://refreshless.com/nouislider/).
+- For splitting text into graphemes (and avoid splitting combining characters from the character they modify) we use [grapheme-splitter](https://github.com/orling/grapheme-splitter).

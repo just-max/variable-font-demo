@@ -17,7 +17,6 @@
 
     <title>Variable Font Demo</title>
     <link rel="stylesheet" href="lmuao.css">
-    <script src="lmuao.js"></script>
 
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="favicon.ico" sizes="any">
@@ -28,37 +27,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.1/nouislider.min.js" integrity="sha512-T5Bneq9hePRO8JR0S/0lQ7gdW+ceLThvC80UjwkMRz+8q+4DARVZ4dqKoyENC7FcYresjfJ6ubaOgIE35irf4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js" integrity="sha512-Ro+jjHMdfC0ZYcLjWhxVxZtGWFbIGsfvZbVCU3EYCr/aP4dIyzHkSeuhF3wQHb43wz2UCs0M7o16+lAC3/muYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/grapheme-splitter@1.0.4/index.js" integrity="sha256-ApHozg+22P2OAAiCbUVy12oWNZxACKDhlKOdnZHK7JU=" crossorigin="anonymous"></script>
+
+    <script src="lmuao.js"></script>
   </head>
   <body>
-    <div style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100vh; gap: 5vh;">
+    <div style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100vh;">
       <header class="header-grey padded" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3em; border-top: 8px var(--lmu-green) solid; border-bottom: 1px #cfcfd8 solid">
-        <div id="options-container-header" class="options-container"
-            style="min-width: 90%; width: min-content; height: max-content; font-size: 2.5rem;">
-          <div style="min-width: 180px">
-            <input id="lmu-options-text" class="header-grey options-text"
-              autofocus style="width: 100%" placeholder="type here" type="text">
+        <form id="options-container-header" class="container options-container"
+            style="height: max-content; font-size: 2.5rem;">
+          <div style="display: flex; align-items: center; min-width: 30%; min-height: 2em;">
+            <div class="input-sizer options-text-wrapper" style="width: 100%;">
+              <textarea id="lmu-options-text" class="header-grey options-text-input input-sized"
+                autofocus rows="1" style="resize: none; height: 100%; width: 100%;" placeholder="type here"></textarea>
+            </div>
           </div>
-          <div class="with-icon" style="min-width: 250px;">
+          <div class="with-icon" style="min-width: 20%;">
             <span class="material-icons">line_weight</span>
             <div class="with-icon-content slider-range" id="lmu-options-weight"></div>
           </div>
-          <div class="with-icon" style="min-width: 200px">
+          <div class="with-icon" style="min-width: 20%;">
             <span class="material-icons">format_size</span>
             <div class="with-icon-content " id="lmu-options-font-size"></div>
           </div>
-        </div>
+        </form>
       </header>
-      
-      <div class="content" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div class="shadow lmu-box">
-          <h3 id="lmu-text-main" class="lmu-text"></h3>
-        </div>
+
+      <div class="content"
+            style="align-self: center; flex-grow: 1; width: max-content; max-width: 100%; overflow: auto;
+              display: flex; flex-direction: column; justify-content: center;">
+          <div style="padding: max(5px, 5vh); width: max-content;">
+            <div class="shadow lmu-box">
+              <span id="lmu-text-main" class="lmu-text"></span>
+            </div>
+          </div>
       </div>
 
       <footer style="background: #232323; color: var(--light-grey);">
-        <div style="margin: 2em 1.5em; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1em 3em">
-          <p><a href="https://github.com/weiweihuanghuang/Work-Sans">Work Sans</a> by Wei Huang is licensed under the <a href="http://scripts.sil.org/OFL">SIL Open Font License, Version 1.1</a>.</p>
-          <p>View this page on <a href="https://github.com/just-max/variable-font-demo">GitHub</a>.</p>
+        <div class="container">
+          <div style="margin: 2em 1.5em; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1em 3em">
+            <p><a href="https://github.com/weiweihuanghuang/Work-Sans">Work Sans</a> by Wei Huang is licensed under the <a href="http://scripts.sil.org/OFL">SIL Open Font License, Version 1.1</a>.</p>
+            <p>View this page on <a href="https://github.com/just-max/variable-font-demo">GitHub</a>.</p>
+          </div>
         </div>
       </footer>
     </div>
