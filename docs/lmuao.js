@@ -51,33 +51,43 @@ function boundingBoxVerticalExtremum(font, text, max) {
 const boundingBoxVerticalMax = (font, text) => boundingBoxVerticalExtremum(font, text, true);
 const boundingBoxVerticalMin = (font, text) => boundingBoxVerticalExtremum(font, text, false);
 
-function setupOptions(textInput, weightRangeInput, fontSizeRangeInput, lmuText, fontPath, mapMarginTop, mapMarginBottom, textWhenEmpty = 'LMAO') {
+function setupOptions(textInput, weightRangeInput, fontSizeRangeInput, lmuText, fontPath, mapMarginTop, mapMarginBottom, options = {}, startValues = {}) {
 
   const fontP = opentype.load(fontPath);
   fontP.catch(console.error);
 
+  const weightRange =  {
+    'min': options.minWeight ?? 100,
+    'max': options.maxWeight ?? 900
+  };
+  if (weightRange.max < weightRange.min) throw new Error('maxWeight is less than minWeight');
+
+  const startMinWeight = clamp(startValues.minWeight ?? 200, weightRange.min, weightRange.max);
+  const startMaxWeight = clamp(startValues.maxWeight ?? 800, startMinWeight, weightRange.max);
+
   const weightSlider = noUiSlider.create(weightRangeInput, {
-    range: {
-      'min': 100,
-      'max': 900
-    },
+    range: weightRange,
     step: 1,
-    start: [ 200, 800 ],
+    start: [ startMinWeight, startMaxWeight ],
     connect: true
   });
 
+  const fontSizeRange =  {
+    'min': options.minFontSize ?? 2,
+    'max': options.maxFontSize ?? 512
+  };
+  if (fontSizeRange.max < fontSizeRange.min) throw new Error('maxFontSize is less than minFontSize');
+  const startFontSize = startValues.fontSize ?? 150;
+
   const fontSizeSlider = noUiSlider.create(fontSizeRangeInput, {
-    range: {
-      'min': 2,
-      'max': 512
-    },
+    range: fontSizeRange,
     step: 1,
-    start: [ 150 ],
+    start: [ startFontSize ],
     connect: [ true, false ]
   });
 
   function updateText() {
-    const text = textInput.value.length > 0 ? textInput.value : textWhenEmpty;
+    const text = textInput.value.length > 0 ? textInput.value : (options.textWhenEmpty ?? 'LMAO');
     while (lmuText.firstChild) { lmuText.firstChild.remove(); }
     lmuText.append(...renderLMU(text, ...weightSlider.get(true)));
     
@@ -105,6 +115,9 @@ function setupOptions(textInput, weightRangeInput, fontSizeRangeInput, lmuText, 
     lmuText.style.fontSize = `${values[0]}px`;
     updateText();
   });
+
+  textInput.value = startValues.text ?? "";
+  updateText();
 }
 
 function setup() {
@@ -114,16 +127,23 @@ function setup() {
     updateParentValue(sizedInput);
   }
 
+  const searchParams = new URL(document.URL).searchParams;
+
   setupOptions(
     ...['lmu-options-text', 'lmu-options-weight', 'lmu-options-font-size', 'lmu-text-main']
       .map(t => document.getElementById(t)),
     'worksans.ttf',
     yMax => yMax === null ? '0em' : `${mapRange(yMax, 730, 120, 0, -0.75)}em`, // trial and error, defined in terms of height of l (730 -> 0em) and . (120 -> -0.75em)
-    yMin => yMin === null ? '0.125em' : `${mapRange(yMin, -10, -215, -0.0625, 0.125)}em` // trial and error, defined in terms of height of o (-10 -> -0.0625em) and y (-215 -> 0.125em)
+    yMin => yMin === null ? '0.125em' : `${mapRange(yMin, -10, -215, -0.0625, 0.125)}em`, // trial and error, defined in terms of height of o (-10 -> -0.0625em) and y (-215 -> 0.125em)
+    {}, Object.fromEntries(['text', 'min-weight', 'max-weight', 'font-size'].map(k => [camelKebab(k), searchParams.get(k)]))
   );
 }
 
 window.addEventListener('DOMContentLoaded', _ => setup());
+
+const clamp = (x, min, max) => x < min ? min : (x > max ? max : x);
+
+const camelKebab = s => s.replace(/-(.)/g, (_, p1) => p1.toUpperCase());
 
 function mapRange(x, from1, to1, from2, to2) {
   return (x - from1) * (to2 - from2) / (to1 - from1) + from2;
