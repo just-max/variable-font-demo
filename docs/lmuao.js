@@ -121,14 +121,7 @@ function setupOptions(textInput, weightRangeInput, fontSizeRangeInput, lmuText, 
 }
 
 function setup() {
-  function updateParentValue(target) { target.parentNode.dataset.value = target.value; }
-  for (const sizedInput of document.getElementsByClassName('input-sized')) {
-    sizedInput.addEventListener('input', e => { updateParentValue(e.target); });
-    updateParentValue(sizedInput);
-  }
-
   const searchParams = new URL(document.URL).searchParams;
-
   setupOptions(
     ...['lmu-options-text', 'lmu-options-weight', 'lmu-options-font-size', 'lmu-text-main']
       .map(t => document.getElementById(t)),
@@ -137,6 +130,12 @@ function setup() {
     yMin => yMin === null ? '0.125em' : `${mapRange(yMin, -10, -215, -0.0625, 0.125)}em`, // trial and error, defined in terms of height of o (-10 -> -0.0625em) and y (-215 -> 0.125em)
     {}, Object.fromEntries(['text', 'min-weight', 'max-weight', 'font-size'].map(k => [camelKebab(k), searchParams.get(k)]))
   );
+
+  function updateParentValue(target) { target.parentNode.dataset.value = target.value; }
+  for (const sizedInput of document.getElementsByClassName('input-sized')) {
+    sizedInput.addEventListener('input', e => { updateParentValue(e.target); });
+    updateParentValue(sizedInput);
+  }
 }
 
 window.addEventListener('DOMContentLoaded', _ => setup());
